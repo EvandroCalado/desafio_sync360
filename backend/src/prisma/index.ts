@@ -1,5 +1,13 @@
 import { PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient();
+let prisma: PrismaClient | null = null;
 
-export default prisma;
+// Função para criar uma instância única do Prisma Client
+const getPrismaInstance = (): PrismaClient => {
+  if (!prisma) {
+    prisma = new PrismaClient();
+  }
+  return prisma;
+};
+
+export default getPrismaInstance();
