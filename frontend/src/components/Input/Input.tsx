@@ -1,15 +1,18 @@
 import { FC } from 'react';
+import { UseFormRegisterReturn } from 'react-hook-form';
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
+  register?: UseFormRegisterReturn;
 }
 
-export const Input: FC<InputProps> = ({ label, ...rest }) => {
+export const Input: FC<InputProps> = ({ label, register, ...rest }) => {
   return (
-    <div className="relative">
+    <div className="relative w-full">
       <input
         {...rest}
+        {...register}
         className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-[1px] border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
         placeholder=" "
       />
