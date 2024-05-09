@@ -10,7 +10,7 @@ interface UserRequest {
   image: string;
 }
 
-export const CreateUserService = {
+export class CreateUserService {
   async execute({
     name,
     age,
@@ -43,5 +43,5 @@ export const CreateUserService = {
     });
 
     return user;
-  },
-};
+  }
+}
