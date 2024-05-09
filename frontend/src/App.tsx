@@ -2,6 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Avatar, Button, Input, Textarea } from 'components';
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { z } from 'zod';
 
 type UserProps = {
@@ -20,29 +21,19 @@ type UserProps = {
 function App() {
   const [user, setUser] = useState<UserProps>({} as UserProps);
 
-  useEffect(() => {
-    (async () => {
-      const user = await fetch('http://localhost:3333/user').then((res) =>
-        res.json(),
-      );
-
-      setUser(user);
-    })();
-  }, []);
-
   const updateSchema = z.object({
     name: z
       .string()
       .min(3, 'O nome deve ter pelo menos 3 caracteres')
       .max(50, 'O nome deve ter no máximo 50 caracteres'),
-    age: z.string().min(1, 'A idade deve ser um número'),
+    age: z.number(),
     street: z.string().min(3, 'A rua deve ter pelo menos 3 caracteres'),
     state: z.string().min(3, 'O estado deve ter pelo menos 3 caracteres'),
     district: z.string().min(3, 'O bairro deve ter pelo menos 3 caracteres'),
     bio: z
       .string()
       .min(20, 'A biografia deve ter pelo menos 20 caracteres')
-      .max(200, 'A biografia deve ter no mínimo 200 caracteres'),
+      .max(300, 'A biografia deve ter no máximo 300 caracteres'),
   });
 
   type UpdateFormData = z.infer<typeof updateSchema>;
@@ -53,8 +44,32 @@ function App() {
     formState: { errors },
   } = useForm<UpdateFormData>({ resolver: zodResolver(updateSchema) });
 
+  useEffect(() => {
+    (async () => {
+      const user = await fetch('http://localhost:3333/user').then((res) =>
+        res.json(),
+      );
+
+      setUser(user);
+    })();
+  }, []);
+
   const handleUpdate: SubmitHandler<UpdateFormData> = async (data) => {
-    console.log(data);
+    const response = await fetch(`http://localhost:3333/user/1`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (response.ok) {
+      toast.success('Informações atualizadas com sucesso!');
+    }
+
+    const user = await response.json();
+
+    setUser(user);
   };
 
   return (
@@ -76,10 +91,10 @@ function App() {
             Endereço: <span className="text-gray-500">{user.street}</span>
           </h2>
           <h2 className="text-sm md:text-base xl:text-xl">
-            Bairro: <span className="text-gray-500">{user.district}</span>
+            Cidade: <span className="text-gray-500">{user.district}</span>
           </h2>
           <h2 className="text-sm md:text-base xl:text-xl">
-            Cidade: <span className="text-gray-500">{user.state}</span>
+            Estado: <span className="text-gray-500">{user.state}</span>
           </h2>
           <h2 className="text-sm md:text-base xl:text-xl">
             Biografia: <span className="text-gray-500">{user.bio}</span>
@@ -106,7 +121,11 @@ function App() {
           </div>
 
           <div className="w-full">
-            <Input type="number" label="idade" register={register('age')} />
+            <Input
+              type="number"
+              label="idade"
+              register={register('age', { valueAsNumber: true })}
+            />
             {errors.age && (
               <span className="text-sm text-red-500">{errors.age.message}</span>
             )}
@@ -114,7 +133,7 @@ function App() {
         </div>
         <div className="flex flex-col md:flex-row gap-4">
           <div className="w-full">
-            <Input type="text" label="rua" register={register('street')} />
+            <Input type="text" label="endereço" register={register('street')} />
             {errors.street && (
               <span className="text-sm text-red-500">
                 {errors.street.message}
