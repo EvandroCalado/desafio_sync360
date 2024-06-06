@@ -42,7 +42,7 @@ docker-compose up -d
 npx prisma migrate dev
 ```
 
-Isso iniciará o container PostgreSQL na máquina na porta 5432, certifique-se que não tenha nada rodando nesta porta, e criará uma tabela no banco de dados.
+Isso iniciará o container PostgreSQL na máquina na porta 5432, certifique-se que não tenha nada rodando nesta porta. O comando migrate criará uma tabela no banco de dados.
 
 4. Popular os dados iniciais:
 
@@ -57,7 +57,7 @@ Isso criará os dados iniciais da aplicação, pois o desafio solicita epenas qu
 5. Execute o backend e frontend em modo de desenvolvimento:
 
 ```
-cd backend && npm run dev 
+cd backend && npm run dev
 cd frontend && npm run dev
 ```
 
