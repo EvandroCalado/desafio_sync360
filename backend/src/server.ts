@@ -1,9 +1,6 @@
 import cors from "cors";
-import express, {
-  type NextFunction,
-  type Request,
-  type Response,
-} from "express";
+import express, { NextFunction, type Request, type Response } from "express";
+import "express-async-errors";
 import router from "./routes";
 
 const app = express();
@@ -16,7 +13,7 @@ app.use(router);
 app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
   if (error instanceof Error) {
     return res.status(400).json({
-      message: error.message,
+      error: error.message,
     });
   }
 

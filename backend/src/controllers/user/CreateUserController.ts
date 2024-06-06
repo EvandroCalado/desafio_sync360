@@ -5,7 +5,9 @@ export class CreateUserController {
   async handle(req: Request, res: Response) {
     const { name, age, street, district, state, bio, image } = req.body;
 
-    const user = await new CreateUserService().execute({
+    const createUserService = new CreateUserService();
+
+    const user = await createUserService.execute({
       name,
       age,
       street,
