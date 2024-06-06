@@ -25,33 +25,34 @@ Certifique-se de ter o Docker instalado em sua máquina para executar o banco de
 1. Clone este repositório:
 
 ```
-git clone https://github.com/seu-usuario/desafio-sync-360.git
+git clone https://github.com/EvandroCalado/desafio_sync360.git
 ```
 
 2. Navegue até a pasta do projeto:
 
 ```
 cd desafio_sync_360
-cd backend
 ```
 
-3. Execute o Docker Compose para iniciar o banco:
+3. Execute o backend:
 
 ```
 cd backend
-docker-compose up
+docker-compose up -d
 npx prisma migrate dev
 ```
 
-Isso iniciará o container do PostgreSQL, do backend na porta 5432 - certifique-se que não tenha nada rodando nesta porta.
+Isso iniciará o container PostgreSQL na máquina na porta 5432, certifique-se que não tenha nada rodando nesta porta, e criará uma tabela no banco de dados.
 
 4. Popular os dados iniciais:
 
 ```
-com ajuda de um cliente http como postman, insomnia ou outro
-mandar uma requisição do tipo POST para: http://localhost:3333/user
-com os dados: name, age, street, district, state, bio, image. O campo age deve ser numérico e image deve ser uma URL de uma imagem.
+com ajuda de um cliente http como postman, insomnia ou outro de sua preferência
+mandar uma requisição do tipo POST para o endpoint: http://localhost:3333/user
+com os seguintes dados: name, age, street, district, state, bio, image. O campo age deve ser numérico e image deve ser uma URL de uma imagem.
 ```
+
+Isso criará os dados iniciais da aplicação, pois o desafio solicita epenas que tenhamos os dados e que possamos atualizar eles.
 
 5. Execute o backend e frontend em modo de desenvolvimento:
 
