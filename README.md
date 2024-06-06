@@ -32,19 +32,28 @@ git clone https://github.com/seu-usuario/desafio-sync-360.git
 
 ```
 cd desafio_sync_360
+cd backend
 ```
 
 3. Execute o Docker Compose para iniciar o banco:
 
 ```
-npx prisma migrate dev
 cd backend
 docker-compose up
+npx prisma migrate dev
 ```
 
 Isso iniciará o container do PostgreSQL, do backend na porta 5432 - certifique-se que não tenha nada rodando nesta porta.
 
-4. Execute em modo de desenvolvimento:
+4. Popular os dados iniciais:
+
+```
+com ajuda de um cliente http como postman, insomnia ou outro
+mandar uma requisição do tipo POST para: http://localhost:3333/user
+com os dados: name, age, street, district, state, bio, image. O campo age deve ser numérico e image deve ser uma URL de uma imagem.
+```
+
+5. Execute o backend e frontend em modo de desenvolvimento:
 
 ```
 cd backend && npm run dev 
@@ -53,7 +62,7 @@ cd frontend && npm run dev
 
 Isso fará o backend rodar na porta 3333 e o frontend rodar na porta 3000
 
-6. Acesse o frontend em seu navegador:
+7. Acesse o frontend em seu navegador:
 
 ```
 http://localhost:3000
