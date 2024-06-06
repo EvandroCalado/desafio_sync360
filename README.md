@@ -37,6 +37,7 @@ cd desafio_sync_360
 3. Execute o Docker Compose para iniciar o banco:
 
 ```
+npx prisma migrate dev
 cd backend
 docker-compose up
 ```
